@@ -1,17 +1,20 @@
 import SwiftUI
 
-struct AddNewNote: View {
+struct EditNoteView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var tasks: [Task]
-    @State private var newNote: String = ""
+    @Binding var task: Task
+    @State private var editedNote: String = ""
     
     var body: some View {
         VStack {
             Form {
-                TextField("Enter new note", text: $newNote)
+                TextField("Edit note", text: $editedNote)
+                    .onAppear {
+                        self.editedNote = self.task.title
+                    }
             }
             Button(action: {
-                tasks.append(Task(title: newNote))
+                task.title = editedNote
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Save")
@@ -20,8 +23,8 @@ struct AddNewNote: View {
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }
-            .disabled(newNote.isEmpty)
-            .navigationTitle("Add Note")
+            .disabled(editedNote.isEmpty)
+            .navigationTitle("Edit Note")
             .navigationBarItems(trailing: Button("Cancel") {
                 presentationMode.wrappedValue.dismiss()
             })
@@ -29,8 +32,8 @@ struct AddNewNote: View {
     }
 }
 
-struct AddNewNoteView_Previews: PreviewProvider {
+struct EditNoteView_Previews: PreviewProvider {
     static var previews: some View {
-        AddNewNote(tasks: .constant([Task(title: "Sample item 1")]))
+        EditNoteView(task: .constant(Task(title: "Sample item")))
     }
 }

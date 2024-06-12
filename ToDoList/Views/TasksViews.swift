@@ -1,40 +1,41 @@
-//
-//  TasksViews.swift
-//  ToDoList
-//
-//  Created by krishna on 07/06/24.
-//
-
 import SwiftUI
 
 struct TasksViews: View {
-//    @State var items: [String] = [
-//        "please write your todo tasks"
-//    ]
-    @State var items: String =
-        "please write your todo tasks"
+    @State private var tasks: [Task] = [
+        Task(title: "Please write your todo tasks")
+    ]
+    
     var body: some View {
-        NavigationView(){
+        NavigationView {
             VStack {
-                VStack(spacing: 10){
-                    ListRowView(title: items)
-//                    ForEach(items,id: \.self){
-                        
-//                    }
+                VStack(spacing: 10) {
+                    ForEach($tasks) { $task in
+                        HStack {
+                            ListRowView(title: task.title)
+                            Spacer()
+                            NavigationLink(destination: EditNoteView(task: $task)) {
+                                Text("📝")
+                                    .font(.system(size: 20))
+                            }
+                            .buttonStyle(BorderlessButtonStyle())
+                            
+                            Button(action: {
+                                if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+                                    tasks.remove(at: index)
+                                }
+                            }) {
+                                Text("🗑️")
+                                    .font(.system(size: 20))
+                            }
+                            .buttonStyle(BorderlessButtonStyle())
+                        }
+                    }
                 }
                 .padding()
                 Spacer()
                     .navigationTitle("ToDo App 🖌️")
-                    .navigationBarItems (
-                        leading: Button(action: {
-                            print("Edit button tapped")
-                        }) {
-                            Text("📝")
-                                .font(
-                                    .system(size: 35))
-                            
-                        },
-                        trailing: NavigationLink(destination: AddNewNote(item: $items)){
+                    .navigationBarItems(
+                        trailing: NavigationLink(destination: AddNewNote(tasks: $tasks)) {
                             Text("➕")
                                 .font(.system(size: 35))
                         }
