@@ -10,4 +10,5 @@ import SwiftUI
 struct Task: Identifiable {
     let id = UUID()
     var title: String = ""
+    var isDone : Bool = false
 }

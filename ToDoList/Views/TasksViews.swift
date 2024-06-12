@@ -11,14 +11,15 @@ struct TasksViews: View {
                 VStack(spacing: 10) {
                     ForEach($tasks) { $task in
                         HStack {
-                            ListRowView(title: task.title)
+                            ListRowView(title: task.title, isDone: $task.isDone)
                             Spacer()
-                            NavigationLink(destination: EditNoteView(task: $task)) {
-                                Text("📝")
-                                    .font(.system(size: 20))
+                            if(!task.isDone){
+                                NavigationLink(destination: EditNoteView(task: $task)) {
+                                    Text("📝")
+                                        .font(.system(size: 20))
+                                }
+                                .buttonStyle(BorderlessButtonStyle())
                             }
-                            .buttonStyle(BorderlessButtonStyle())
-                            
                             Button(action: {
                                 if let index = tasks.firstIndex(where: { $0.id == task.id }) {
                                     tasks.remove(at: index)

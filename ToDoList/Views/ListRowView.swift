@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListRowView: View {
     let title: String
-    @State private var isDone: Bool = false
+    @Binding var isDone: Bool
     var body: some View {
         HStack{
             Image(systemName: isDone ? "checkmark.circle.fill" : "checkmark.circle")
@@ -36,6 +36,6 @@ struct ListRowView: View {
 
 struct ListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ListRowView(title: "This  is the first title")
+        ListRowView(title: "This  is the first title",isDone: .constant(false))
     }
 }
