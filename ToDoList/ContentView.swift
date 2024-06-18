@@ -8,13 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    //    @State private var showingAddNoteView = false
     var body: some View {
-        NavigationView{
-            VStack{
-                TasksViews()
-            }
-        }
+        TasksViews()
     }
 }
 

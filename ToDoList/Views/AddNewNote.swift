@@ -7,25 +7,52 @@ struct AddNewNote: View {
     
     var body: some View {
         VStack {
-            Form {
-                TextField("Enter new note", text: $newNote)
-            }
             Button(action: {
-                tasks.append(Task(title: newNote))
                 presentationMode.wrappedValue.dismiss()
             }) {
-                Text("Save")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                HStack {
+                    Image(systemName: "chevron.left")
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.blue)
+                        .frame(width: 30, height: 30)
+                    Text("Back")
+                        .font(.headline)
+                }
+                Spacer()
             }
-            .disabled(newNote.isEmpty)
-            .navigationTitle("Add Note")
-            .navigationBarItems(trailing: Button("Cancel") {
-                presentationMode.wrappedValue.dismiss()
-            })
+            TextField("Enter new note", text: $newNote)
+                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                .font(.system(size: 35))
+                .padding()
+            //            .navigationBarBackButtonHidden(true)
+            Spacer()
+            HStack{
+                Button(action: {
+                    tasks.append(Task(title: newNote))
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Save")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .disabled(newNote.isEmpty)
+                Spacer()
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }){
+                    Text("Cancel")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+            }
+            .padding()
         }
+        .navigationBarHidden(false)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

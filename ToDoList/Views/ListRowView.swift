@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct ListRowView: View {
-    let title: String
-    @Binding var isDone: Bool
+    @Binding var task: Task
     var body: some View {
         HStack{
-            Image(systemName: isDone ? "checkmark.circle.fill" : "checkmark.circle")
-                .foregroundColor(isDone ? .blue : .primary)
-            Text(title)
+            Image(systemName: task.isDone ? "checkmark.circle.fill" : "checkmark.circle")
+                .foregroundColor(task.isDone ? .blue : .primary)
+            Text(task.title)
             Spacer()
-            if(!isDone){
+            if(!task.isDone){
                 Button(action: {
-                    isDone.toggle()
+                    task.isDone.toggle()
                 }){
                     Text("markAsDone")
                         .font(.system(size: 14))
@@ -29,13 +28,13 @@ struct ListRowView: View {
                 }
             }
         }
-        .padding(.vertical,5)
+        .padding(.vertical,15)
         .padding(.horizontal)
     }
 }
 
 struct ListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ListRowView(title: "This  is the first title",isDone: .constant(false))
+        ListRowView(task: .constant(Task(title: "Sample")))
     }
 }

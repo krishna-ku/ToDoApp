@@ -8,10 +8,22 @@ struct TasksViews: View {
     var body: some View {
         NavigationView {
             VStack {
-                VStack(spacing: 10) {
+                HStack {
+                    Text("ToDo App 🖌️")
+                        .font(.system(size: 40))
+                        .frame(alignment: .center)
+                    Spacer()
+                    NavigationLink(destination: AddNewNote(tasks: $tasks)) {
+                        Text("➕")
+                            .font(.system(size: 35))
+                            .padding()
+                    }
+                }
+                .padding()
+                VStack{
                     ForEach($tasks) { $task in
                         HStack {
-                            ListRowView(title: task.title, isDone: $task.isDone)
+                            ListRowView(task: $task)
                             Spacer()
                             if(!task.isDone){
                                 NavigationLink(destination: EditNoteView(task: $task)) {
@@ -32,15 +44,9 @@ struct TasksViews: View {
                         }
                     }
                 }
-                .padding()
+                //                .padding()
                 Spacer()
-                    .navigationTitle("ToDo App 🖌️")
-                    .navigationBarItems(
-                        trailing: NavigationLink(destination: AddNewNote(tasks: $tasks)) {
-                            Text("➕")
-                                .font(.system(size: 35))
-                        }
-                    )
+                //                .navigationTitle("ToDo App 🖌️")
             }
         }
     }

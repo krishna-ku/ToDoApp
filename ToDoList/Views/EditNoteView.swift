@@ -7,27 +7,56 @@ struct EditNoteView: View {
     
     var body: some View {
         VStack {
-            Form {
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "chevron.left")
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.blue)
+                        .frame(width: 30, height: 30)
+                    Text("Back")
+                        .font(.headline)
+                }
+                Spacer()
+            }
                 TextField("Edit note", text: $editedNote)
                     .onAppear {
                         self.editedNote = self.task.title
                     }
-            }
-            Button(action: {
-                task.title = editedNote
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Save")
+                    .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                    .font(.system(size: 35))
                     .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+            Spacer()
+            .navigationBarHidden(true)
+            HStack{
+                Button(action: {
+                    task.title = editedNote
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Save")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .disabled(editedNote.isEmpty)
+                Spacer()
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }){
+                    Text("Cancel")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
             }
-            .disabled(editedNote.isEmpty)
-            .navigationTitle("Edit Note")
-            .navigationBarItems(trailing: Button("Cancel") {
-                presentationMode.wrappedValue.dismiss()
-            })
+            .padding()
+            //            .navigationTitle("Edit Note")
+            //            .navigationBarItems(trailing: Button("Cancel") {
+            //                presentationMode.wrappedValue.dismiss()
+            //            })
         }
     }
 }
